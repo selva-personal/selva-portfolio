@@ -17,16 +17,16 @@ export const WorldCanvas = React.memo(function WorldCanvas({
   const world = useWorld();
   const reducedMotion = propReducedMotion ?? world.reducedMotion;
 
-  const glSettings = useMemo(
-    () => ({
-      antialias: true,
-      alpha: false,
-      powerPreference: "high-performance" as const,
-      toneMapping: THREE.ACESFilmicToneMapping,
-      toneMappingExposure: 1.15,
-    }),
-    [],
-  );
+const glSettings = useMemo(
+  () => ({
+    antialias: false,
+    alpha: false,
+    powerPreference: "default" as const,
+    toneMapping: THREE.ACESFilmicToneMapping,
+    toneMappingExposure: 1.15,
+  }),
+  [],
+);
 
   const cameraSettings = useMemo(
     () => ({
@@ -45,14 +45,16 @@ export const WorldCanvas = React.memo(function WorldCanvas({
 
   return (
     <Canvas
-      shadows={!reducedMotion}
-      dpr={dpr}
-      camera={cameraSettings}
-      gl={glSettings}
-    >
-      <Suspense fallback={null}>
-        <Scene reducedMotion={reducedMotion} />
-      </Suspense>
-    </Canvas>
+  shadows={!reducedMotion}
+  dpr={dpr}
+  camera={cameraSettings}
+  gl={glSettings}
+  performance={{ min: 0.5, max: 1, debounce: 200 }}
+  style={{ width: "100%", height: "100%" }}
+>
+  <Suspense fallback={null}>
+    <Scene reducedMotion={reducedMotion} />
+  </Suspense>
+</Canvas>
   );
 });

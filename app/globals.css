@@ -1,8 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05060d;
-  --foreground: #e8eefc;
+  color-scheme: light;
+
+  --background: #ffffff;
+  --foreground: #111827;
+
+  --surface: #f8fafc;
+  --surface-elevated: #ffffff;
+  --border: #e5e7eb;
+
+  --muted: #64748b;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #eff6ff;
+  --accent-cyan: #06b6d4;
+
+  --font-body-fallback: Arial, Helvetica, sans-serif;
 }
 
 @theme inline {
@@ -11,23 +25,183 @@
   --font-sans: var(--font-body);
 }
 
+/* Global reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  scroll-padding-top: 90px;
+  background: var(--background);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background:
-    radial-gradient(1200px 500px at 10% -10%, rgba(76, 29, 149, 0.28), transparent 55%),
-    radial-gradient(900px 400px at 90% 0%, rgba(37, 99, 235, 0.18), transparent 50%),
-    var(--background);
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), sans-serif;
+  font-family: var(--font-body), var(--font-body-fallback);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Selection */
 ::selection {
-  background: rgba(139, 92, 246, 0.45);
+  color: #ffffff;
+  background: var(--accent);
 }
 
+/* Links and controls */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgb(37 99 235 / 35%);
+  outline-offset: 3px;
+}
+
+/* Responsive media */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+section[id] {
+  scroll-margin-top: 90px;
+}
+
+/* Reusable premium light-theme utilities */
+.light-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.premium-card {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgb(15 23 42 / 4%);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .premium-card:hover {
+    transform: translateY(-3px);
+    border-color: #bfdbfe;
+    box-shadow: 0 12px 30px rgb(15 23 42 / 7%);
+  }
+}
+
+.accent-text {
+  color: var(--accent);
+}
+
+.accent-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .accent-button:hover {
+    transform: translateY(-1px);
+    background: var(--accent-hover);
+    box-shadow: 0 6px 16px rgb(37 99 235 / 16%);
+  }
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1f2937;
+  font-weight: 600;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .secondary-button:hover {
+    border-color: #93c5fd;
+    background: #f8fafc;
+  }
+}
+
+/* Refined scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid #f8fafc;
+  border-radius: 999px;
+  background: #cbd5e1;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Accessibility: reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -39,5 +213,6 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
